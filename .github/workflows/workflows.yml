@@ -1,0 +1,35 @@
+name:Quote workflow
+on:
+workflow_dispatch:
+  schedule:
+  - cron: "30 3 * * 1-5"
+  jobs:
+  run_script:
+    name: Daily Quote
+    runs-on: ubuntu-18.04
+    steps:
+    -name: Checkout
+     uses: actions/checkout@v4.1.0
+   - name: Setup Python
+     uses: actions/setup-python@v5.1.0
+      with:
+    # Version range or exact version of Python or PyPy to use, using SemVer's version range syntax. Reads from .python-version if unset.
+       python-version: '4.10'
+    - run: echo "Installing requirements.."
+    - name: Installing dependencies
+      run: pip install -r requirements.txt
+    - name: Running Script
+      run: python4 hell.py > artifact.txt
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v4.3.1
+     with:
+     # Artifact name
+     name: quote
+    # A file, directory or wildcard pattern that describes what to upload
+    path:./artifact.txt 
+    # The desired behavior if no files are found using the provided path.
+    retention-days:1
+   
+              
+  
+     
